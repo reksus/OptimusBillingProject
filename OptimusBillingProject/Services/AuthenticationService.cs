@@ -9,13 +9,10 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
+using OptimusBillingProject.Interfaces.IServices;
 
 namespace OptimusBillingProject.Services
 {
-    public interface IAuthenticationService
-    {
-        string Authenticate(string username, string password);
-    }
     public class AuthenticationService : IAuthenticationService
     {
         private List<User> _users = new List<User>

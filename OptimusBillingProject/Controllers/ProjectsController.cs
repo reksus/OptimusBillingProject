@@ -17,25 +17,6 @@ namespace OptimusBillingProject.Controllers
     [ApiController]
     public class ProjectsController : ControllerBase
     {
-        private IAuthenticationService _authenticationService;
-
-        public ProjectsController(IAuthenticationService authenticationService)
-        {
-            _authenticationService = authenticationService ?? throw new ArgumentNullException("Authentication Service");
-        }
-
-        // POST : api/projects/authenticate
-        [AllowAnonymous]
-        [HttpPost("authenticate")]
-        public IActionResult Authenticate([FromBody]AuthenticateModel model)
-        {
-            var token = _authenticationService.Authenticate(model.Username, model.Password);
-
-            if (token == null)
-                return BadRequest(new { message = "Username or password is incorrect" });
-
-            return Ok(token);
-        }
 
         // GET: api/projects
         [HttpGet]
@@ -59,6 +40,21 @@ namespace OptimusBillingProject.Controllers
                 }
             };
             return projects;
+        }
+
+        // PUT: api/projects/1
+        [HttpPut("{id}")]
+        public ActionResult<Project> UpdateProject(int id, Project project)
+        {
+            if (project.Id != id)
+            {
+                return BadRequest("Project to be updated doesn't match the given Id");
+            }
+            return new Project
+            {
+                TotalBilledAmount = project.TotalBilledAmount,
+                TotalBilledHours = project.TotalBilledHours
+            };
         }
     }
 }
