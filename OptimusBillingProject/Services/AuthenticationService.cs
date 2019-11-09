@@ -1,0 +1,60 @@
+﻿using Microsoft.Extensions.Options;
+using OptimusBillingProject.Entity;
+using OptimusBillingProject.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
+
+namespace OptimusBillingProject.Services
+{
+    public interface IAuthenticationService
+    {
+        string Authenticate(string username, string password);
+    }
+    public class AuthenticationService : IAuthenticationService
+    {
+        private List<User> _users = new List<User>
+        {
+            new User { Id = 1, FirstName = "Test", LastName = "User", Username = "test", Password = "test" }
+        };
+
+        private readonly AppSettings _appSettings;
+
+        public AuthenticationService(IOptions<AppSettings> appSettings)
+        {
+            if (appSettings == null)
+                throw new ArgumentNullException();
+            _appSettings = appSettings.Value;
+        }
+
+        public string Authenticate(string username, string password)
+        {
+            var user = _users.SingleOrDefault(x => x.Username == username && x.Password == password);
+
+            // return null if user not found
+            if (user == null)
+                return null;
+
+            // authentication successful so generate jwt token
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, user.Id.ToString())
+                }),
+                Expires = DateTime.UtcNow.AddDays(7),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            var tokenString = tokenHandler.WriteToken(token);
+            return tokenString;
+        }
+    }
+}
