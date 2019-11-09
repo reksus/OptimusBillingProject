@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using OptimusBillingProject.Entity;
 using OptimusBillingProject.Models;
 using OptimusBillingProject.Services;
+using OptimusBillingProject.Interfaces.IServices;
 
 namespace OptimusBillingProject.Controllers
 {
@@ -17,29 +18,19 @@ namespace OptimusBillingProject.Controllers
     [ApiController]
     public class ProjectsController : ControllerBase
     {
+        private IProjectsService _projectsService;
+
+        public ProjectsController(IProjectsService projectService)
+        {
+            _projectsService = projectService ?? throw new ArgumentNullException();
+        }
 
         // GET: api/projects
         [HttpGet]
         public ActionResult<IEnumerable<Project>> GetAllProjects()
         {
-            var projects = new List<Project>()
-            {
-                new Project
-                {
-                    Id = 1,
-                    LastBilledDate = DateTime.Today,
-                    TotalBilledHours = 200,
-                    TotalBilledAmount = 200,
-                },
-                new Project
-                {
-                    Id = 2,
-                    LastBilledDate = DateTime.Today,
-                    TotalBilledHours = 250,
-                    TotalBilledAmount = 250
-                }
-            };
-            return projects;
+            var projects = _projectsService.GetAllProjects();
+            return projects.ToList();
         }
 
         // PUT: api/projects/1
@@ -50,11 +41,9 @@ namespace OptimusBillingProject.Controllers
             {
                 return BadRequest("Project to be updated doesn't match the given Id");
             }
-            return new Project
-            {
-                TotalBilledAmount = project.TotalBilledAmount,
-                TotalBilledHours = project.TotalBilledHours
-            };
+            var _project = _projectsService.UpdateProject(id, project);
+            return _project;
+            
         }
     }
 }

@@ -60,6 +60,7 @@ namespace OptimusBillingProject
             });
             // configure DI for application services
             services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IProjectsService, ProjectsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
