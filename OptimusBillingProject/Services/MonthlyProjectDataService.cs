@@ -20,5 +20,15 @@ namespace OptimusBillingProject.Services
         {
             return _monthlyProjectDataRepository.GetMonthlyProjectData(month, year);
         }
+
+        public IEnumerable<MonthlyProjectData> GetMonthlyProjectData(int month, int year, int id)
+        {
+            return _monthlyProjectDataRepository.GetMonthlyProjectData(month, year, id);
+        }
+
+        public MonthlyProjectData UpdateMonthlyProjectData(int month, int year, int id, MonthlyProjectData monthlyProjectData)
+        {
+            return _monthlyProjectDataRepository.UpdateMonthlyProjectData(month, year, id, monthlyProjectData);
+        }
     }
 }

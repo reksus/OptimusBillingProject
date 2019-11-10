@@ -261,5 +261,47 @@ namespace OptimusBillingProject.Extensions
                 }
             );
         }
+
+        public static void ConfigureEntityProperties(this ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<FixedCost>().Property(p => p.MonthlyChargeableFee).HasColumnName("Monthly_Chargeable_Fee");
+            modelBuilder.Entity<FixedCost>().Property(p => p.ChargeableHours).HasColumnName("Chargeable_Hours");
+            modelBuilder.Entity<FixedCost>().Property(p => p.RemarksForAdjustedHours).HasColumnName("Remarks_For_Adjusted_Hours");
+            modelBuilder.Entity<FixedCost>().Property(p => p.ChargedFee).HasColumnName("Charged_Fee");
+            modelBuilder.Entity<FixedCost>().Property(p => p.WorkItemId).HasColumnName("Work_Item_Id");
+
+            modelBuilder.Entity<MonthlyProjectData>().Property(p => p.ProjectId).HasColumnName("Project_Id");
+            modelBuilder.Entity<MonthlyProjectData>().Property(p => p.MonthlyBilledAmount).HasColumnName("Monthly_Billed_Amount");
+            modelBuilder.Entity<MonthlyProjectData>().Property(p => p.MonthlyBilledHours).HasColumnName("Monthly_Billed_Hours");
+            modelBuilder.Entity<MonthlyProjectData>().Property(p => p.LastUpdatedOn).HasColumnName("Last_Updated_On");
+            modelBuilder.Entity<MonthlyProjectData>().Property(p => p.IsLocked).HasColumnName("Is_Locked");
+            modelBuilder.Entity<MonthlyProjectData>().Property(p => p.MonthYearId).HasColumnName("Month_Year_Id");
+
+            modelBuilder.Entity<Project>().Property(p => p.LastBilledDate).HasColumnName("Last_Billed_Date");
+            modelBuilder.Entity<Project>().Property(p => p.TotalBilledAmount).HasColumnName("Total_Billed_Amount");
+            modelBuilder.Entity<Project>().Property(p => p.TotalBilledHours).HasColumnName("Total_Billed_Hours");
+
+            modelBuilder.Entity<ProjectLockedUnlockedHistory>().Property(p => p.ActionPerformed).HasColumnName("Action_Performed");
+            modelBuilder.Entity<ProjectLockedUnlockedHistory>().Property(p => p.UpdatedBy).HasColumnName("Updated_By");
+            modelBuilder.Entity<ProjectLockedUnlockedHistory>().Property(p => p.UpdatedOn).HasColumnName("Updated_On");
+            modelBuilder.Entity<ProjectLockedUnlockedHistory>().Property(p => p.MonthlyProjectDataId).HasColumnName("Monthly_Project_Data_Id");
+
+            modelBuilder.Entity<SOW>().Property(p => p.SowIdKickoff).HasColumnName("Sow_Id_Kickoff");
+            modelBuilder.Entity<SOW>().Property(p => p.BilledHours).HasColumnName("Billed_Hours");
+            modelBuilder.Entity<SOW>().Property(p => p.APContactEmail).HasColumnName("AP_Contact_Email");
+            modelBuilder.Entity<SOW>().Property(p => p.IsCheckedByDeliveryHead).HasColumnName("Is_Checked_By_Delivery_Head");
+            modelBuilder.Entity<SOW>().Property(p => p.IsCheckedByPmo).HasColumnName("Is_Checked_By_Pmo");
+            modelBuilder.Entity<SOW>().Property(p => p.IncidentalCost).HasColumnName("Incidental_Cost");
+            modelBuilder.Entity<SOW>().Property(p => p.MonthlyProjectDataId).HasColumnName("Monthly_Project_Id");
+
+            modelBuilder.Entity<WorkItem>().Property(p => p.SOWId).HasColumnName("SOW_Id_Billing");
+            modelBuilder.Entity<WorkItem>().Property(p => p.WorkItemIdKickoff).HasColumnName("Work_Item_Id_Kickoff");
+            modelBuilder.Entity<WorkItem>().Property(p => p.IsFixedCost).HasColumnName("Is_Fixed_Cost");
+
+            modelBuilder.Entity<Resource>().Property(p => p.ResourceHours).HasColumnName("Resource_Hours");
+            modelBuilder.Entity<Resource>().Property(p => p.IsSameAsRedmine).HasColumnName("Is_Same_As_Redmine");
+            modelBuilder.Entity<Resource>().Property(p => p.RemarksForAdjusted).HasColumnName("Remarks_For_Adjusted");
+            modelBuilder.Entity<Resource>().Property(p => p.WorkItemId).HasColumnName("Work_Item_Id");
+        }
     }
 }

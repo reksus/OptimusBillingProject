@@ -22,7 +22,8 @@ namespace OptimusBillingProject.Repository
             int monthYearId = _context.MonthYear.FirstOrDefault(my => my.Year == year && my.Month == month).Id;
             
             var monthlyProjectData = _context.MonthlyProjectData
-                                             .Where(monthlyData => monthlyData.MonthYearId == monthYearId)
+                                             .Where(monthlyData => 
+                                                    monthlyData.MonthYearId == monthYearId)
                                                  .Include(monthlyData => monthlyData.SOWs)
                                                      .ThenInclude(sow => sow.WorkItems)
                                                          .ThenInclude(workItem => workItem.Resources)
@@ -34,9 +35,50 @@ namespace OptimusBillingProject.Repository
             return monthlyProjectData;
 
         }
-        //public IEnumerable<MonthlyProjectData> GetMonthlyProjectData(int month, int year)
-        //{
-        //    return _context.MonthlyProjectData.ToList();
-        //}
+
+        public IEnumerable<MonthlyProjectData> GetMonthlyProjectData(int month, int year, int id)
+        {
+            //get the monthyear id from the Month_year table based on route parameters
+            int monthYearId = _context.MonthYear.FirstOrDefault(my => my.Year == year && my.Month == month).Id;
+            
+            var monthlyProjectData = _context.MonthlyProjectData
+                                             .Where(monthlyData => 
+                                                    monthlyData.MonthYearId == monthYearId && 
+                                                    monthlyData.ProjectId == id)
+                                                 .Include(monthlyData => monthlyData.SOWs)
+                                                     .ThenInclude(sow => sow.WorkItems)
+                                                         .ThenInclude(workItem => workItem.Resources)
+                                                 .Include(monthlyData => monthlyData.SOWs)
+                                                     .ThenInclude(sow => sow.WorkItems)
+                                                         .ThenInclude(workItem => workItem.FixedCost)
+                                             .ToList();
+
+            return monthlyProjectData;  
+        }
+
+        public MonthlyProjectData UpdateMonthlyProjectData(int month, int year, int id, MonthlyProjectData monthlyProjectData)
+        {
+
+            _context.Entry(monthlyProjectData).State = EntityState.Modified;
+
+            foreach (var sow in monthlyProjectData.SOWs)
+            {
+                _context.Entry(sow).State = EntityState.Modified;
+                foreach (var workItem in sow.WorkItems)
+                {
+                    _context.Entry(workItem).State = EntityState.Modified;
+                    foreach (var resource in workItem.Resources)
+                    {
+                        _context.Entry(resource).State = EntityState.Modified;
+                    }
+                    if (workItem.FixedCost != null)
+                        _context.Entry(workItem.FixedCost).State = EntityState.Modified;
+                }
+            }
+
+            _context.SaveChanges();
+
+            return monthlyProjectData;
+        }
     }
 }

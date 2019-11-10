@@ -27,6 +27,7 @@ namespace OptimusBillingProject.Models
         {
             // Seeding data
             modelBuilder.Seed();
+            modelBuilder.ConfigureEntityProperties();
         }
     }
 }
