@@ -16,6 +16,10 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using OptimusBillingProject.Interfaces.IServices;
+using OptimusBillingProject.Models;
+using Microsoft.EntityFrameworkCore;
+using OptimusBillingProject.Interfaces.IRespositories;
+using OptimusBillingProject.Repository;
 
 namespace OptimusBillingProject
 {
@@ -31,6 +35,11 @@ namespace OptimusBillingProject
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            // configure DB Context
+            var connection = Configuration.GetConnectionString("BillingDB");
+            services.AddDbContext<BillingDbContext>(options => options.UseSqlServer(connection));
+
             services.AddCors();
             services.AddControllers();
 
@@ -61,6 +70,7 @@ namespace OptimusBillingProject
             // configure DI for application services
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IProjectsService, ProjectsService>();
+            services.AddScoped<IProjectsRepository, ProjectsRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

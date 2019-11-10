@@ -9,6 +9,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
+using OptimusBillingProject.Models;
 
 namespace OptimusBillingProject.Interfaces.IServices
 {
@@ -20,6 +21,6 @@ namespace OptimusBillingProject.Interfaces.IServices
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        string Authenticate(string username, string password);
+        AuthenticationTokenModel Authenticate(string username, string password);
     }
 }    

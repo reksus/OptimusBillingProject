@@ -10,6 +10,7 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using OptimusBillingProject.Interfaces.IServices;
+using OptimusBillingProject.Models;
 
 namespace OptimusBillingProject.Services
 {
@@ -29,7 +30,7 @@ namespace OptimusBillingProject.Services
             _appSettings = appSettings.Value;
         }
 
-        public string Authenticate(string username, string password)
+        public AuthenticationTokenModel Authenticate(string username, string password)
         {
             var user = _users.SingleOrDefault(x => x.Username == username && x.Password == password);
 
@@ -50,8 +51,11 @@ namespace OptimusBillingProject.Services
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            var tokenString = tokenHandler.WriteToken(token);
-            return tokenString;
+            //return tokenString;
+            return new AuthenticationTokenModel
+            {
+                token = tokenHandler.WriteToken(token)
+            };
         }
     }
 }

@@ -25,7 +25,7 @@ namespace OptimusBillingProject.Controllers
 
         // POST : api/user/authenticate
         [HttpPost("authenticate")]
-        public IActionResult Authenticate([FromBody]AuthenticateModel model)
+        public ActionResult<AuthenticationTokenModel> Authenticate([FromBody]AuthenticateModel model)
         {
             var token = _authenticationService.Authenticate(model.Username, model.Password);
 
