@@ -114,4 +114,7 @@ C:\Users\Nexues\source\repos\OptimusBillingProject\OptimusBillingProject\bin\Deb
 C:\Users\Nexues\source\repos\OptimusBillingProject\OptimusBillingProject\bin\Debug\netcoreapp3.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\Nexues\source\repos\OptimusBillingProject\OptimusBillingProject\bin\Debug\netcoreapp3.0\Microsoft.IdentityModel.Protocols.dll
 C:\Users\Nexues\source\repos\OptimusBillingProject\OptimusBillingProject\bin\Debug\netcoreapp3.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\Nexues\source\repos\OptimusBillingProject\OptimusBillingProject\bin\Debug\netcoreapp3.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\Nexues\source\repos\OptimusBillingProject\OptimusBillingProject\bin\Debug\netcoreapp3.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Users\Nexues\source\repos\OptimusBillingProject\OptimusBillingProject\bin\Debug\netcoreapp3.0\Newtonsoft.Json.Bson.dll
 C:\Users\Nexues\source\repos\OptimusBillingProject\OptimusBillingProject\obj\Debug\netcoreapp3.0\OptimusBillingProject.MvcApplicationPartsAssemblyInfo.cache

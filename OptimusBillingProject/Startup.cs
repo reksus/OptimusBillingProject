@@ -20,6 +20,7 @@ using OptimusBillingProject.Models;
 using Microsoft.EntityFrameworkCore;
 using OptimusBillingProject.Interfaces.IRespositories;
 using OptimusBillingProject.Repository;
+using Newtonsoft.Json;
 
 namespace OptimusBillingProject
 {
@@ -39,6 +40,12 @@ namespace OptimusBillingProject
             // configure DB Context
             var connection = Configuration.GetConnectionString("BillingDB");
             services.AddDbContext<BillingDbContext>(options => options.UseSqlServer(connection));
+
+        // fix for circular looping reference 
+        // https://stackoverflow.com/questions/57912012/net-core-3-upgrade-cors-and-jsoncycle-xmlhttprequest-error
+            services.AddMvc(option => option.EnableEndpointRouting = false)
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+                .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
             services.AddCors();
             services.AddControllers();
@@ -67,10 +74,14 @@ namespace OptimusBillingProject
                     ValidateAudience = false
                 };
             });
+            
             // configure DI for application services
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IProjectsService, ProjectsService>();
+            services.AddScoped<IMonthlyProjectDataService, MonthlyProjectDataService>();
+            
             services.AddScoped<IProjectsRepository, ProjectsRepository>();
+            services.AddScoped<IMonthlyProjectDataRepository, MonthlyProjectDataRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

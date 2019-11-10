@@ -5,12 +5,11 @@ using System.Threading.Tasks;
 
 namespace OptimusBillingProject.Entity
 {
-    public class Project
+    public class MonthYear
     {
         public int Id { get; set; }
-        public DateTime LastBilledDate { get; set; }
-        public float TotalBilledHours { get; set; }
-        public float TotalBilledAmount { get; set; }
+        public int Month { get; set; }
+        public int Year { get; set; }
         public ICollection<MonthlyProjectData> MonthlyProjectData { get; set; }
     }
 }

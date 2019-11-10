@@ -15,6 +15,13 @@ namespace OptimusBillingProject.Models
         }
 
         public DbSet<Project> Projects { get; set; }
+        public DbSet<MonthlyProjectData> MonthlyProjectData { get; set; }
+        public DbSet<MonthYear> MonthYear { get; set; }
+        public DbSet<SOW> SOWs { get; set; }
+        public DbSet<WorkItem> WorkItems { get; set; }
+        public DbSet<Resource> Resources { get; set; }
+        public DbSet<FixedCost> FixedCosts { get; set; }
+        public DbSet<ProjectLockedUnlockedHistory> ProjectLockedUnlockedHistorys { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

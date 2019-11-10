@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OptimusBillingProject.Models;
 
 namespace OptimusBillingProject.Migrations
 {
     [DbContext(typeof(BillingDbContext))]
-    partial class BillingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191110120825_seeding complete")]
+    partial class seedingcomplete
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,7 +48,7 @@ namespace OptimusBillingProject.Migrations
                     b.HasIndex("WorkItemId")
                         .IsUnique();
 
-                    b.ToTable("FixedCosts");
+                    b.ToTable("FixedCost");
 
                     b.HasData(
                         new
@@ -270,7 +272,7 @@ namespace OptimusBillingProject.Migrations
 
                     b.HasIndex("MonthlyProjectDataId");
 
-                    b.ToTable("ProjectLockedUnlockedHistorys");
+                    b.ToTable("ProjectLockedUnlockedHistory");
 
                     b.HasData(
                         new
@@ -279,7 +281,7 @@ namespace OptimusBillingProject.Migrations
                             ActionPerformed = "freezed",
                             MonthlyProjectDataId = 1,
                             UpdatedBy = "Head",
-                            UpdatedOn = new DateTime(2019, 11, 10, 17, 49, 2, 367, DateTimeKind.Local).AddTicks(3510)
+                            UpdatedOn = new DateTime(2019, 11, 10, 17, 38, 24, 130, DateTimeKind.Local).AddTicks(8314)
                         });
                 });
 
@@ -309,7 +311,7 @@ namespace OptimusBillingProject.Migrations
 
                     b.HasIndex("WorkItemId");
 
-                    b.ToTable("Resources");
+                    b.ToTable("Resource");
 
                     b.HasData(
                         new
@@ -381,7 +383,7 @@ namespace OptimusBillingProject.Migrations
 
                     b.HasIndex("MonthlyProjectDataId");
 
-                    b.ToTable("SOWs");
+                    b.ToTable("SOW");
 
                     b.HasData(
                         new
@@ -450,7 +452,7 @@ namespace OptimusBillingProject.Migrations
 
                     b.HasIndex("SOWId");
 
-                    b.ToTable("WorkItems");
+                    b.ToTable("WorkItem");
 
                     b.HasData(
                         new

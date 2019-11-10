@@ -1,4 +1,5 @@
-﻿using OptimusBillingProject.Entity;
+﻿using Microsoft.EntityFrameworkCore;
+using OptimusBillingProject.Entity;
 using OptimusBillingProject.Interfaces.IRespositories;
 using OptimusBillingProject.Models;
 using System;
