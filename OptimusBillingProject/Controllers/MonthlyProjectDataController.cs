@@ -13,11 +13,11 @@ namespace OptimusBillingProject.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class MontlyProjectDataController : ControllerBase
+    public class MonthlyProjectDataController : ControllerBase
     {
         private IMonthlyProjectDataService _monthlyProjectDataService;
 
-        public MontlyProjectDataController(IMonthlyProjectDataService projectService)
+        public MonthlyProjectDataController(IMonthlyProjectDataService projectService)
         {
             _monthlyProjectDataService = projectService ?? throw new ArgumentNullException();
         }
@@ -41,17 +41,36 @@ namespace OptimusBillingProject.Controllers
         }
 
         // Updates the hour's data for a given monthly project
-        // GET: api/monthlyprojectdata/11/2019/1
+        // PUT: api/monthlyprojectdata/11/2019/1
         [HttpPut("{month}/{year}/{projectId}")]
         public ActionResult UpdateMonthlyProjectData(int month, int year, int projectId, MonthlyProjectData monthlyProjectData)
         {
-            if (projectId != monthlyProjectData.Id)
+            if (projectId != monthlyProjectData.ProjectId)
             {
                 return BadRequest();
             }
 
             var _monthlyProjectData = _monthlyProjectDataService.UpdateMonthlyProjectData(month, year, projectId, monthlyProjectData);
             return Ok(_monthlyProjectData);
+        }
+
+        // This is to FREEZE the monthly project data 
+        // PUT: api/MonthlyProjectData/11/2019/1/freeze
+        [HttpPut("{month}/{year}/{projectId}/freeze")]
+        public ActionResult FreezeMonthlyProjectData(int month, int year, int projectId, ProjectLockedUnlockedHistory projectLockedUnlockedHistory)
+        {
+            _monthlyProjectDataService.FreezeMonthlyProjectData(month, year, projectId, projectLockedUnlockedHistory);
+            return Ok(projectLockedUnlockedHistory);
+
+        }
+        
+        // This is to UNFREEZE the monthly project data 
+        // PUT: api/MonthlyProjectData/11/2019/1/unfreeze
+        [HttpPut("{month}/{year}/{projectId}/unfreeze")]
+        public ActionResult UnfreezeMonthlyProjectData(int month, int year, int projectId, ProjectLockedUnlockedHistory projectLockedUnlockedHistory)
+        {
+            _monthlyProjectDataService.UnfreezeMonthlyProjectData(month, year, projectId, projectLockedUnlockedHistory);
+            return Ok(projectLockedUnlockedHistory);
         }
     }
 }

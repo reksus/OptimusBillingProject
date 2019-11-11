@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace OptimusBillingProject.Interfaces.IRespositories
 {
-    public interface IProjectsRepository
+    public interface IProjectLockedUnlockedHistoryRepository
     {
-        IEnumerable<Project> GetAllProjects();
-        Project GetProject(int projectId);
-        Project UpdateProject(int id, Project project);
+        ProjectLockedUnlockedHistory AddHistory(ProjectLockedUnlockedHistory projectLockedUnlockedHistory);
     }
 }

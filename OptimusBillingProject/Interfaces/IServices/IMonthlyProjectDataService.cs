@@ -11,5 +11,7 @@ namespace OptimusBillingProject.Interfaces.IServices
         IEnumerable<MonthlyProjectData> GetMonthlyProjectData(int month, int year);
         IEnumerable<MonthlyProjectData> GetMonthlyProjectData(int month, int year, int id);
         MonthlyProjectData UpdateMonthlyProjectData(int month, int year, int id, MonthlyProjectData monthlyProjectData);
+        void FreezeMonthlyProjectData(int month, int year, int projectId, ProjectLockedUnlockedHistory projectLockedUnlockedHistory);
+        void UnfreezeMonthlyProjectData(int month, int year, int projectId, ProjectLockedUnlockedHistory projectLockedUnlockedHistory);
     }
 }

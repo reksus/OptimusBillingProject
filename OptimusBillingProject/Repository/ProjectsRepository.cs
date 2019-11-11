@@ -21,9 +21,16 @@ namespace OptimusBillingProject.Repository
             return  _context.Projects.ToList();
         }
 
+        public Project GetProject(int projectId)
+        {
+            return _context.Projects.Find(projectId);
+        }
+
         public Project UpdateProject(int id, Project project)
         {
-            throw new NotImplementedException();
+            _context.Entry(project).State = EntityState.Modified;
+            _context.SaveChanges();
+            return project;
         }
     }
 }
